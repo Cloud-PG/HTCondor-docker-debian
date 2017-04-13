@@ -39,10 +39,10 @@ LOCAL_CONFIG_DIR = /etc/condor/config.d
 #LOCAL_CONFIG_DIR_EXCLUDE_REGEXP = ^((\..*)|(.*~)|(#.*)|(.*\.rpmsave)|(.*\.rpmnew))$
 
 ##  Use a host-based security policy. By default CONDOR_HOST and the local machine will be allowed
-use SECURITY : HOST_BASED
+#use SECURITY : HOST_BASED
 ##  To expand your condor pool beyond a single host, set ALLOW_WRITE to match all of the hosts
-ALLOW_READ = *
-ALLOW_WRITE = *
+#ALLOW_READ = *
+#ALLOW_WRITE = *
 ##  FLOCK_FROM defines the machines that grant access to your pool via flocking. (i.e. these machines can join your pool).
 #FLOCK_FROM =
 ##  FLOCK_TO defines the central managers that your schedd will advertise itself to (i.e. these pools will give matches to your schedd).
@@ -87,3 +87,8 @@ DAEMON_LIST = MASTER, @ROLE_DAEMONS@
 DISCARD_SESSION_KEYRING_ON_STARTUP = False
 
 # Condor Connection Brocker (CCB) - if present
+
+
+#added
+HOSTALLOW_ADMINISTRATOR = $(CONDOR_HOST)
+HOSTALLOW_OWNER = $(FULL_HOSTNAME), $(HOSTALLOW_ADMINISTRATOR)
