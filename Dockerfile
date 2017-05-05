@@ -64,4 +64,6 @@ COPY    submitter_healthcheck.py /opt/health/submitter/healthcheck.py
 COPY 	sshd_config /etc/ssh/sshd_config
 COPY    run.sh /usr/local/sbin/run.sh
 
-ENTRYPOINT ["/sbin/tini", "--", "/usr/local/sbin/run.sh"]
+#ENTRYPOINT ["/sbin/tini", "--", "/usr/local/sbin/run.sh"]
+
+CMD     /bin/bash
