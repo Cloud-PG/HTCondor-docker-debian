@@ -68,4 +68,7 @@ COPY    submitter_healthcheck.py /opt/health/submitter/healthcheck.py
 COPY 	sshd_config /etc/ssh/sshd_config
 COPY    run.sh /usr/local/sbin/run.sh
 
+RUN     ln -s /usr/lib64/condor /usr/lib/condor
+RUN     ln -s /usr/libexec/condor /usr/lib/condor/libexec
+
 ENTRYPOINT ["/sbin/tini", "--", "/usr/local/sbin/run.sh"]
