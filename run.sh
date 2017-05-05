@@ -165,4 +165,4 @@ _EOF_
   condor_store_cred -f /etc/condor/condorSharedSecret -p $SHARED_SECRET
 fi
 
-exec /usr/local/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

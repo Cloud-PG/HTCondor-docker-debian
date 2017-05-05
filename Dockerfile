@@ -52,6 +52,10 @@ RUN     yum install -y condor-all python-pip && pip install supervisor superviso
         mkdir -p /opt/health/master/ /opt/health/executor/ /opt/health/submitter/ && \
         pip install Flask
 
+RUN     pip install --upgrade pip && \
+        pip uninstall distribute && \
+        pip install --upgrade setuptools
+
 USER    root
 WORKDIR /root
 RUN     chmod u+x /sbin/tini
@@ -64,6 +68,4 @@ COPY    submitter_healthcheck.py /opt/health/submitter/healthcheck.py
 COPY 	sshd_config /etc/ssh/sshd_config
 COPY    run.sh /usr/local/sbin/run.sh
 
-#ENTRYPOINT ["/sbin/tini", "--", "/usr/local/sbin/run.sh"]
-
-CMD     /bin/bash
+ENTRYPOINT ["/sbin/tini", "--", "/usr/local/sbin/run.sh"]
