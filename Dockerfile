@@ -32,13 +32,10 @@ RUN adduser $AMS_USER -d $AMS_USER_HOME && echo "$AMS_USER:ams" | chpasswd && \
     chmod 0440 /etc/sudoers.d/$AMS_USER
 RUN chown -R $AMS_USER $AMS_USER_HOME
 
-ADD setup_amsenv.sh  $AMS_USER_HOME
+COPY setup_amsenv.sh  $AMS_USER_HOME
 RUN chown -R $AMS_USER $AMS_USER_HOME/setup_amsenv.sh
 
-USER $AMS_USER
-WORKDIR $AMS_USER_HOME
-
-ADD dot-bashrc  $AMS_USER_HOME/.bashrc
+COPY dot-bashrc  $AMS_USER_HOME/.bashrc
 RUN chown $AMS_USER $AMS_USER_HOME/.bashrc
 RUN chmod u+x $AMS_USER_HOME/setup_amsenv.sh
 
