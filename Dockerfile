@@ -52,6 +52,10 @@ RUN     yum install -y condor-all python-pip && pip install supervisor superviso
         mkdir -p /opt/health/master/ /opt/health/executor/ /opt/health/submitter/ && \
         pip install Flask
 
+USER    root
+WORKDIR /root
+RUN     chmod u+x /sbin/tini
+
 COPY 	supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY    condor_config /etc/condor/condor_config
 COPY    master_healthcheck.py /opt/health/master/healthcheck.py
