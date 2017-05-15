@@ -41,7 +41,7 @@ PASSWORD=
 CCB=
 PRIVATE_NETWORK_NAME=
 SHARED_SECRET=
-while getopts ':me:s:c:k:u:p:C:P:S:' OPTION; do
+while getopts ':m:e:s:c:k:u:p:C:P:S:' OPTION; do
   case $OPTION in
     m)
       [ -n "$ROLE_DAEMONS" -o -z "$OPTARG" ] && usage
