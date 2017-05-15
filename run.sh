@@ -46,7 +46,7 @@ while getopts ':me:s:c:k:u:p:C:P:S:' OPTION; do
     m)
       [ -n "$ROLE_DAEMONS" ] && usage
       ROLE_DAEMONS="$MASTER_DAEMONS"
-      CONDOR_HOST='$(FULL_HOSTNAME)'
+      CONDOR_HOST="$OPTARG"
       HEALTH_CHECK='master'
     ;;
     e)
