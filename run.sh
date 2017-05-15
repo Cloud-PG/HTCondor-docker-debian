@@ -44,7 +44,7 @@ SHARED_SECRET=
 while getopts ':me:s:c:k:u:p:C:P:S:' OPTION; do
   case $OPTION in
     m)
-      [ -n "$ROLE_DAEMONS" ] && usage
+      [ -n "$ROLE_DAEMONS" -o -z "$OPTARG" ] && usage
       ROLE_DAEMONS="$MASTER_DAEMONS"
       CONDOR_HOST="$OPTARG"
       HEALTH_CHECK='master'
