@@ -41,12 +41,12 @@ PASSWORD=
 CCB=
 PRIVATE_NETWORK_NAME=
 SHARED_SECRET=
-while getopts ':m:e:s:c:k:u:p:C:P:S:' OPTION; do
+while getopts ':me:s:c:k:u:p:C:P:S:' OPTION; do
   case $OPTION in
     m)
-      [ -n "$ROLE_DAEMONS" -o -z "$OPTARG" ] && usage
+      [ -n "$ROLE_DAEMONS" ] && usage
       ROLE_DAEMONS="$MASTER_DAEMONS"
-      CONDOR_HOST="$OPTARG"
+      CONDOR_HOST='$(FULL_HOSTNAME)'
       HEALTH_CHECK='master'
     ;;
     e)
