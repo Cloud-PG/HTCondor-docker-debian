@@ -11,7 +11,7 @@ EXPOSE  22
 ADD     https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /sbin/tini
 RUN	set -ex \
 	# CONDOR
-	&& apt-get update && apt-get install -y wget procps curl \
+	&& apt-get update && apt-get install -y wget procps curl vim emacs \
 	&& chmod +x /sbin/tini \
 	&& echo "deb http://research.cs.wisc.edu/htcondor/ubuntu/stable/ trusty contrib" >> /etc/apt/sources.list \
 	&& wget -qO - http://research.cs.wisc.edu/htcondor/ubuntu/HTCondor-Release.gpg.key | apt-key add - \
