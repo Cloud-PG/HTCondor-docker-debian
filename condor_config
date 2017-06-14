@@ -88,6 +88,7 @@ DISCARD_SESSION_KEYRING_ON_STARTUP = False
 
 # Condor Connection Brocker (CCB) - if present
 
+CCB_ADDRESS = @CONDOR_HOST@
 
 #added
 HOSTALLOW_ADMINISTRATOR = $(CONDOR_HOST)
