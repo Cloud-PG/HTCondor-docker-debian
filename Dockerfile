@@ -17,7 +17,7 @@ RUN yum install -y yum-plugin-ovl
 RUN yum update -y; yum clean all
 RUN yum -y install \
     freetype fuse sudo glibc-devel glibc-headers libstdc++-devel curl wget \
-    man nano openssh-server openssl098e libXext libXpm \
+    man nano openssh-server openssl098e libXext libXpm vim emacs \
     git gsl-devel freetype-devel libSM libX11-devel libXext-devel make gcc-c++ \
     gcc binutils libXpm-devel libXft-devel boost-devel \
     cmake ncurses ncurses-devel; \
