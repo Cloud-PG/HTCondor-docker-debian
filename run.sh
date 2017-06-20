@@ -12,7 +12,7 @@ usage() {
 	Configure HTCondor role and start supervisord for this container. 
 	
 	OPTIONS:
-	  -m                	configure container as HTCondor master
+	  -m master-address    	configure container as HTCondor master
 	  -e master-address 	configure container as HTCondor executor for the given master
 	  -s master-address 	configure container as HTCondor submitter for the given master
 	  -c url-to-config  	config file reference from http url.
@@ -22,6 +22,7 @@ usage() {
 	  -C ccb		Condor Connection Broker (CCB).
 	  -P private network	Private Network Name parameter for condor_config.
 	  -S shared secret	Shared secret.
+          -I schedd interface	Schedd ip address for condor config
 	EOF
   exit 1
 }
@@ -33,6 +34,8 @@ SSH_ACCESS=
 # Get our options
 ROLE_DAEMONS=
 CONDOR_HOST=
+SCHEDD_HOST=
+INTERFACE=
 HEALTH_CHECKS=
 CONFIG_URL=
 KEY_URL=
@@ -41,18 +44,20 @@ PASSWORD=
 CCB=
 PRIVATE_NETWORK_NAME=
 SHARED_SECRET=
-while getopts ':me:s:c:k:u:p:C:P:S:' OPTION; do
+while getopts ':me:s:c:k:u:p:C:P:S:I:' OPTION; do
   case $OPTION in
     m)
-      [ -n "$ROLE_DAEMONS" ] && usage
+      [ -n "$ROLE_DAEMONS" -o -z "$OPTARG" ] && usage
       ROLE_DAEMONS="$MASTER_DAEMONS"
       CONDOR_HOST='$(FULL_HOSTNAME)'
+      echo "NETWORK_INTERFACE = $OPTARG" >> /etc/condor/condor_config
       HEALTH_CHECK='master'
     ;;
     e)
       [ -n "$ROLE_DAEMONS" -o -z "$OPTARG" ] && usage
       ROLE_DAEMONS="$EXECUTOR_DAEMONS"
       CONDOR_HOST="$OPTARG"
+      echo "CCB_ADDRESS = $OPTARG" >> /etc/condor/condor_config
       HEALTH_CHECK='executor'
     ;;
     c)
@@ -92,6 +97,10 @@ while getopts ':me:s:c:k:u:p:C:P:S:' OPTION; do
     S)
       [ -n "$SHARED_SECRET" -o -z "$OPTARG" ] && usage
       SHARED_SECRET="$OPTARG"
+    ;;
+    I)
+      [ -n "$SCHEDD_HOST" -o -z "$OPTARG" ] && usage
+      echo "NETWORK_INTERFACE = $OPTARG" >> /etc/condor/condor_config
     ;;  
     *)
       usage
@@ -149,6 +158,18 @@ sed -i \
 sed -i \
   -e 's/@ROLE@/'"$HEALTH_CHECK"'/' \
   /etc/supervisor/conf.d/supervisord.conf
+
+#if [-n "$SCHEDD_HOST"]; then
+#  echo "NETWORK_INTERFACE = $INTERFACE" >> /etc/condor/condor_config
+#fi
+#
+#if [-n "$MASTER_HOST"]; then
+#  echo "NETWORK_INTERFACE = $INTERFACE" >> /etc/condor/condor_config
+#fi
+#
+#if [-n "$SCHEDD_HOST"]; then
+#  echo "NETWORK_INTERFACE = $INTERFACE" >> /etc/condor/condor_config
+#fi
 
 # Prepare HTCondor to CCB connection
 if [ -n "$CCB" -a -n "$PRIVATE_NETWORK_NAME" -a -n "$SHARED_SECRET" ]; then
