@@ -7,7 +7,7 @@ SUBMITTER_DAEMONS="SCHEDD"
 
 usage() {
   cat <<-EOF
-	usage: $0 -m|-e master-address|-s master-address [-c url-to-config] [-k url-to-public-key] [-u inject user -p password] [-C Condor Connection Broker (CCB) -P Private Network Namei -S Shared Secret]
+	usage: $0 -m master-address|-e master-address|-s master-address [-c url-to-config] [-k url-to-public-key] [-u inject user -p password] [-C Condor Connection Broker (CCB) -P Private Network Namei -S Shared Secret -I Schedd Interface]
 	
 	Configure HTCondor role and start supervisord for this container. 
 	
@@ -44,7 +44,7 @@ PASSWORD=
 CCB=
 PRIVATE_NETWORK_NAME=
 SHARED_SECRET=
-while getopts ':me:s:c:k:u:p:C:P:S:I:' OPTION; do
+while getopts ':m:e:s:c:k:u:p:C:P:S:I:' OPTION; do
   case $OPTION in
     m)
       [ -n "$ROLE_DAEMONS" -o -z "$OPTARG" ] && usage
