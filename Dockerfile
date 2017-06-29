@@ -38,6 +38,9 @@ RUN chown -R $AMS_USER $AMS_USER_HOME/setup_amsenv.sh
 COPY dot-bashrc  $AMS_USER_HOME/.bashrc
 RUN chown $AMS_USER $AMS_USER_HOME/.bashrc
 RUN chmod u+x $AMS_USER_HOME/setup_amsenv.sh
+RUN mkdir $AMS_USER_HOME/.ssh
+RUN chown $AMS_USER:$AMS_USER $AMS_USER_HOME/.ssh
+
 
 # CONDOR
 ADD     https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /sbin/tini
