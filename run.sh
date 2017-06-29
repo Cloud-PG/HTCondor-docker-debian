@@ -75,6 +75,7 @@ while getopts ':m:e:s:c:k:u:p:C:P:S:I:' OPTION; do
       [ -n "$KEY_URL" -o -z "$OPTARG" ] && usage
       SSH_ACCESS='yes'
       KEY_URL="$OPTARG"
+      
     ;;  
     u)
       [ -n "$USER" -o -z "$OPTARG" ] && usage
@@ -119,7 +120,8 @@ if [ \( -n "$CCB" -a -z "$PRIVATE_NETWORK_NAME" \) -a \( -z "$CCB" -a -n "$PRIVA
 fi;
 
 # Prepare SSH access
-if [ -n "$KEY_URL" -a -n "$SSH_ACCESS" ]; then
+if [ -n "$KEY_URL" -a -n "$SSH_ACCESS" ]; theni
+  mkdir /root/.ssh
   wget -O - "$KEY_URL" > /root/.ssh/authorized_keys
 fi
 
