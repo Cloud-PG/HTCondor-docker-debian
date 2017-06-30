@@ -57,6 +57,9 @@ while getopts ':m:e:s:c:k:u:p:C:P:S:I:' OPTION; do
       [ -n "$ROLE_DAEMONS" -o -z "$OPTARG" ] && usage
       ROLE_DAEMONS="$EXECUTOR_DAEMONS"
       CONDOR_HOST="$OPTARG"
+      echo "SLOT_TYPE_1 = cpus=1,ram=2048" >> /etc/condor/condor_config
+      echo "NUM_SLOTS = 1" >> /etc/condor/condor_config
+      echo "NUM_SLOTS_TYPE_1 = 1" >> /etc/condor/condor_config
       echo "CCB_ADDRESS = $OPTARG" >> /etc/condor/condor_config
       HEALTH_CHECK='executor'
     ;;
