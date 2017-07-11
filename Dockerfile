@@ -56,7 +56,7 @@ RUN     yum install -y condor-all python-pip && pip install supervisor superviso
         pip install Flask
 
 RUN     pip install --upgrade pip && \
-        pip uninstall -y distribute && \
+#        pip uninstall -y distribute && \
         pip install --upgrade setuptools
 
 USER    root
