@@ -1,6 +1,6 @@
 # Dockerizing HTCondor nodes
 
-FROM       cern/cc7-base
+FROM       centos:centos7
 MAINTAINER Manuel Ciangottini <manuel.ciangottini@gmail.com>
 ENV        TINI_VERSION v0.9.0
 EXPOSE  5000
