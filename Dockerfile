@@ -23,6 +23,7 @@ RUN yum -y install \
     cmake ncurses ncurses-devel; \
     yum clean all
 RUN yum install -y cvs openssh-clients
+RUN yum remove -y cmake
 
 WORKDIR /root
 
