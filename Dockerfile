@@ -10,6 +10,8 @@ EXPOSE  22
 ENV AMS_USER="amsuser"
 ENV AMS_USER_HOME="/home/amsuser"
 
+RUN curl -sS http://get.onedata.org/oneclient.sh | bash
+
 #--- Patch yum for docker
 RUN yum install -y yum-plugin-ovl
 
@@ -42,19 +44,19 @@ RUN chmod u+x $AMS_USER_HOME/setup_amsenv.sh
 RUN mkdir $AMS_USER_HOME/.ssh
 RUN chown $AMS_USER:$AMS_USER $AMS_USER_HOME/.ssh
 
-# ONEDATA
+# CMAKE
 
-RUN wget http://www.cmake.org/files/v3.0/cmake-3.0.0.tar.gz
-RUN tar -zxvf cmake-3.0.0.tar.gz
-WORKDIR /root/cmake-3.0.0
-RUN ./bootstrap
-RUN gmake
-RUN gmake install
-WORKDIR /root
-RUN mv cmake-3.0.0 /usr/local/
-WORKDIR /usr/local/cmake-3.0.0
-RUN mkdir share
-RUN cp -R /usr/local/share/cmake-3.0/ share/
+#RUN wget http://www.cmake.org/files/v3.0/cmake-3.0.0.tar.gz
+#RUN tar -zxvf cmake-3.0.0.tar.gz
+#WORKDIR /root/cmake-3.0.0
+#RUN ./bootstrap
+#RUN gmake
+#RUN gmake install
+#WORKDIR /root
+#RUN mv cmake-3.0.0 /usr/local/
+#WORKDIR /usr/local/cmake-3.0.0
+#RUN mkdir share
+#RUN cp -R /usr/local/share/cmake-3.0/ share/
 
 # CONDOR
 ADD     https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /sbin/tini
