@@ -1,8 +1,8 @@
-# Dockerizing HTCondor submit node
+# Dockerizing HTCondor nodes
 
-FROM 	   cern/slc6-base
+FROM       cern/cc7-base
 MAINTAINER Manuel Ciangottini <manuel.ciangottini@gmail.com>
-ENV 	   TINI_VERSION v0.9.0
+ENV        TINI_VERSION v0.9.0
 EXPOSE  5000
 EXPOSE  22
 
@@ -16,8 +16,8 @@ RUN yum install -y yum-plugin-ovl
 #--- Install rpms
 RUN yum update -y; yum clean all
 RUN yum -y install \
-    freetype fuse sudo glibc-devel glibc-headers libstdc++-devel curl wget \
-    man nano openssh-server openssl098e libXext libXpm vim emacs \
+    freetype fuse sudo glibc-devel glibc-headers libstdc++-devel \
+    man nano emacs openssh-server openssl098e libXext libXpm curl wget vim \
     git gsl-devel freetype-devel libSM libX11-devel libXext-devel make gcc-c++ \
     gcc binutils libXpm-devel libXft-devel boost-devel \
     cmake ncurses ncurses-devel; \
@@ -46,8 +46,8 @@ RUN chown $AMS_USER:$AMS_USER $AMS_USER_HOME/.ssh
 ADD     https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /sbin/tini
 
 WORKDIR /etc/yum.repos.d
-RUN	wget http://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-development-rhel6.repo
-RUN     wget http://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel6.repo
+RUN	wget http://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-development-rhel7.repo
+RUN     wget http://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel7.repo
 RUN     wget http://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor
 RUN     rpm --import RPM-GPG-KEY-HTCondor
 RUN     yum install -y condor-all python-pip && pip install supervisor supervisor-stdout && \
