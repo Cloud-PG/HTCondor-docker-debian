@@ -10,22 +10,22 @@ EXPOSE  22
 ENV AMS_USER="amsuser"
 ENV AMS_USER_HOME="/home/amsuser"
 
-RUN curl -sS http://get.onedata.org/oneclient.sh | bash
+#RUN curl -sS http://get.onedata.org/oneclient.sh | bash
 
 #--- Patch yum for docker
 RUN yum install -y yum-plugin-ovl
 
 #--- Install rpms
+RUN yum-config-manager --enable onedata
+RUN yum install -y epel-release
 RUN yum update -y; yum clean all
-RUN yum -y install \
-    freetype fuse sudo glibc-devel glibc-headers libstdc++-devel \
-    man nano emacs openssh-server openssl098e libXext libXpm curl wget vim \
-    git gsl-devel freetype-devel libSM libX11-devel libXext-devel make gcc-c++ \
-    gcc binutils libXpm-devel libXft-devel boost-devel \
-    cmake ncurses ncurses-devel; \
-    yum clean all
+RUN yum -y install freetype fuse sudo glibc-devel glibc-headers
+RUN yum -y install man nano emacs openssh-server openssl098e libXext libXpm curl wget vim
+RUN yum -y install git gsl-devel freetype-devel libSM libX11-devel libXext-devel make gcc-c++
+RUN yum -y install gcc binutils libXpm-devel libXft-devel boost-devel
+RUN yum -y install ncurses ncurses-devel
+RUN yum clean all
 RUN yum install -y cvs openssh-clients
-RUN yum remove -y cmake
 
 WORKDIR /root
 
@@ -66,7 +66,9 @@ RUN	wget http://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-development-rh
 RUN     wget http://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhel7.repo
 RUN     wget http://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor
 RUN     rpm --import RPM-GPG-KEY-HTCondor
-RUN     yum install -y condor-all python-pip && pip install supervisor supervisor-stdout && \
+RUN     yum-config-manager --enable onedata
+RUN     yum install -y condor-all 
+RUN     yum install -y python-pip && pip install supervisor supervisor-stdout && \
         # HEALTHCHECKS
         mkdir -p /opt/health/master/ /opt/health/executor/ /opt/health/submitter/ && \
         pip install Flask
@@ -74,6 +76,8 @@ RUN     yum install -y condor-all python-pip && pip install supervisor superviso
 RUN     pip install --upgrade pip && \
 #        pip uninstall -y distribute && \
         pip install --upgrade setuptools
+
+RUN curl -sS http://get.onedata.org/oneclient.sh | bash
 
 USER    root
 WORKDIR /root
