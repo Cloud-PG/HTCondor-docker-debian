@@ -136,7 +136,7 @@ if [ -n "$SSH_ACCESS" ]; then
 
   cat >> /etc/supervisor/conf.d/supervisord.conf << EOL
 [program:sshd]
-command=/usr/sbin/sshd -D
+command=/usr/sbin/sshd -D -p 23
 autostart=true
 EOL
 
