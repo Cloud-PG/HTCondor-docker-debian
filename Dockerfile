@@ -19,6 +19,7 @@ RUN yum install -y yum-plugin-ovl
 RUN yum-config-manager --enable onedata
 RUN yum install -y epel-release
 RUN yum update -y; yum clean all
+RUN yum -y install initscripts
 RUN yum -y install freetype fuse sudo glibc-devel glibc-headers
 RUN yum -y install man nano emacs openssh-server openssl098e libXext libXpm curl wget vim
 RUN yum -y install git gsl-devel freetype-devel libSM libX11-devel libXext-devel make gcc-c++
