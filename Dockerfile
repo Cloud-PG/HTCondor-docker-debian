@@ -16,17 +16,17 @@ ENV AMS_USER_HOME="/home/amsuser"
 RUN yum install -y yum-plugin-ovl
 
 #--- Install rpms
-RUN yum-config-manager --enable onedata
-RUN yum install -y epel-release
-RUN yum update -y; yum clean all
-RUN yum -y install initscripts
-RUN yum -y install freetype fuse sudo glibc-devel glibc-headers
-RUN yum -y install man nano emacs openssh-server openssl098e libXext libXpm curl wget vim
-RUN yum -y install git gsl-devel freetype-devel libSM libX11-devel libXext-devel make gcc-c++
-RUN yum -y install gcc binutils libXpm-devel libXft-devel boost-devel
-RUN yum -y install ncurses ncurses-devel
-RUN yum clean all
-RUN yum install -y cvs openssh-clients
+RUN yum-config-manager --enable onedata; \
+yum install -y epel-release; \
+yum update -y; yum clean all; \
+yum -y install initscripts; \
+yum -y install freetype fuse sudo glibc-devel glibc-headers; \
+yum -y install man nano emacs openssh-server openssl098e libXext libXpm curl wget vim; \
+yum -y install git gsl-devel freetype-devel libSM libX11-devel libXext-devel make gcc-c++; \
+yum -y install gcc binutils libXpm-devel libXft-devel boost-devel; \
+yum -y install ncurses ncurses-devel; \
+yum clean all; \
+yum install -y cvs openssh-clients;
 
 RUN yum -y install systemd; yum clean all; \
 (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
@@ -102,6 +102,9 @@ COPY    executor_healthcheck.py /opt/health/executor/healthcheck.py
 COPY    submitter_healthcheck.py /opt/health/submitter/healthcheck.py
 COPY 	sshd_config /etc/ssh/sshd_config
 COPY    run.sh /usr/local/sbin/run.sh
+
+RUN     mkdir -p /mnt/onedata; \
+mkdir -p /var/log/dodas
 
 RUN     ln -s /usr/lib64/condor /usr/lib/condor
 RUN     ln -s /usr/libexec/condor /usr/lib/condor/libexec
