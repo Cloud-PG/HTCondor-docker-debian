@@ -63,7 +63,7 @@ while getopts ':m:e:s:c:k:u:p:C:P:S:I:' OPTION; do
       echo "NUM_SLOTS_TYPE_1 = 1" >> /etc/condor/condor_config
       echo "CCB_ADDRESS = $OPTARG" >> /etc/condor/condor_config
       ONEDATA='true'
-      oneclient -i -o allow_other -H $CMS_ONEDATA_CACHE -t $ONEDATA_ACCESS_TOKEN /mnt/onedata/
+      oneclient -i -o allow_other -H $AMS_ONEDATA_CACHE -t $ONEDATA_ACCESS_TOKEN /mnt/onedata/
       HEALTH_CHECK='executor'
     ;;
     c)
@@ -76,7 +76,7 @@ while getopts ':m:e:s:c:k:u:p:C:P:S:I:' OPTION; do
       ROLE_DAEMONS="$SUBMITTER_DAEMONS"
       CONDOR_HOST="$OPTARG"
       ONEDATA='true'
-      oneclient -i -o allow_other -H $CMS_ONEDATA_CACHE -t $ONEDATA_ACCESS_TOKEN /mnt/onedata/
+      oneclient -i -o allow_other -H $AMS_ONEDATA_CACHE -t $ONEDATA_ACCESS_TOKEN /mnt/onedata/
       HEALTH_CHECK='submitter'
     ;;
     k)
