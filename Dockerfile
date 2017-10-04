@@ -79,7 +79,7 @@ RUN     wget http://research.cs.wisc.edu/htcondor/yum/repo.d/htcondor-stable-rhe
 RUN     wget http://research.cs.wisc.edu/htcondor/yum/RPM-GPG-KEY-HTCondor
 RUN     rpm --import RPM-GPG-KEY-HTCondor
 RUN     yum-config-manager --enable onedata
-RUN     yum install -y condor-all 
+RUN     yum install -y condor-all
 RUN     yum install -y python-pip && pip install supervisor supervisor-stdout && \
         # HEALTHCHECKS
         mkdir -p /opt/health/master/ /opt/health/executor/ /opt/health/submitter/ && \
@@ -89,8 +89,11 @@ RUN     pip install --upgrade pip && \
 #        pip uninstall -y distribute && \
         pip install --upgrade setuptools
 
-RUN curl -sS http://get.onedata.org/oneclient.sh | bash
-
+# RUN curl -sS http://get.onedata.org/oneclient.sh | bash
+RUN wget -O onedata.repo http://packages.onedata.org/yum/onedata_centos_7x.repo
+RUN yum -y --enablerepo=onedata install oneclient && \
+    yum clean all
+    
 USER    root
 WORKDIR /root
 RUN     chmod u+x /sbin/tini
