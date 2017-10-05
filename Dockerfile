@@ -23,7 +23,7 @@ yum -y install initscripts; \
 yum -y install freetype fuse sudo glibc-devel glibc-headers; \
 yum -y install man nano emacs openssh-server openssl098e libXext libXpm curl wget vim; \
 yum -y install git gsl-devel freetype-devel libSM libX11-devel libXext-devel make gcc-c++; \
-yum -y install gcc binutils libXpm-devel libXft-devel boost-devel; \
+yum -y install gcc binutils libXpm-devel libXft-devel boost-devel krb5-workstation pam-krb5; \
 yum -y install ncurses ncurses-devel; \
 yum clean all; \
 yum install -y cvs openssh-clients;
@@ -98,6 +98,7 @@ USER    root
 WORKDIR /root
 RUN     chmod u+x /sbin/tini
 
+COPY    etc-krb5.conf /etc/krb5.conf
 COPY 	supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY    condor_config /etc/condor/condor_config
 COPY    master_healthcheck.py /opt/health/master/healthcheck.py
