@@ -23,7 +23,7 @@ RUN yum -y install initscripts
 RUN yum -y install freetype fuse sudo glibc-devel glibc-headers
 RUN yum -y install man nano emacs openssh-server openssl098e libXext libXpm curl wget vim
 RUN yum -y install git gsl-devel freetype-devel libSM libX11-devel libXext-devel make gcc-c++
-RUN yum -y install gcc binutils libXpm-devel libXft-devel boost-devel
+RUN yum -y install gcc binutils libXpm-devel libXft-devel boost-devel krb5-workstation pam-krb5
 RUN yum -y install ncurses ncurses-devel
 RUN yum clean all
 RUN yum install -y cvs openssh-clients
@@ -93,11 +93,12 @@ RUN     pip install --upgrade pip && \
 RUN wget -O onedata.repo http://packages.onedata.org/yum/onedata_centos_7x.repo
 RUN yum -y --enablerepo=onedata install oneclient && \
     yum clean all
-    
+
 USER    root
 WORKDIR /root
 RUN     chmod u+x /sbin/tini
 
+COPY    etc-krb5.conf /etc/krb5.conf
 COPY 	supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY    condor_config /etc/condor/condor_config
 COPY    master_healthcheck.py /opt/health/master/healthcheck.py
