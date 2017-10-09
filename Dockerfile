@@ -90,8 +90,10 @@ RUN     pip install --upgrade pip && \
         pip install --upgrade setuptools
 
 # RUN curl -sS http://get.onedata.org/oneclient.sh | bash
-RUN wget -O onedata.repo http://packages.onedata.org/yum/onedata_centos_7x.repo
-RUN yum -y --enablerepo=onedata install oneclient && \
+# RUN wget -O onedata.repo http://packages.onedata.org/yum/onedata_centos_7x.repo
+RUN wget -O onedata.rpm http://onedata-dev-packages.cloud.plgrid.pl/yum/centos/7x/x86_64/oneclient-17.06.0.rc4-1.el7.centos.x86_64.rpm
+# RUN yum -y --enablerepo=onedata install oneclient && \
+RUN yum -y localinstall onedata.rpm && \
     yum clean all
 
 USER    root
